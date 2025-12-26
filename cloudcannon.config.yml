@@ -2,3 +2,4 @@ collections_config:
   pages:
     path: .
     glob: "*.html"
+    output: true
