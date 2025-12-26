@@ -4,79 +4,259 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Catálogo | JAGUARES SHOP</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
-        /* --- ESTILOS COMPARTIDOS --- */
-        :root { --rojo: #E60000; --amarillo: #FFD700; --negro: #111111; --blanco: #FFFFFF; --gris: #f4f4f4; --whats: #25D366; }
+        :root { 
+            --rojo: #E60000; 
+            --amarillo: #FFD700; 
+            --negro: #111111; 
+            --blanco: #FFFFFF; 
+            --gris-oscuro: #1a1a1a; 
+            --whats: #25D366; 
+        }
+        
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Montserrat', sans-serif; color: var(--negro); background: var(--blanco); }
+        
+        body { 
+            font-family: 'Montserrat', sans-serif; 
+            color: var(--blanco);
+            background: var(--negro); 
+            overflow-x: hidden;
+        }
+        
         a { text-decoration: none; color: inherit; }
 
         /* NAVBAR */
-        .navbar { position: fixed; top: 0; width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 20px 50px; background: rgba(255,255,255,0.98); z-index: 1000; border-bottom: 3px solid var(--rojo); }
-        .logo { font-weight: 900; font-size: 1.5rem; text-transform: uppercase; }
-        .logo span { color: var(--rojo); }
-        .nav-links { display: flex; gap: 20px; list-style: none; }
-        .nav-links a { font-weight: 700; font-size: 0.9rem; text-transform: uppercase; }
+        .navbar { 
+            position: fixed; top: 0; width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 15px 50px; 
+            background: rgba(17,17,17,0.95); backdrop-filter: blur(10px); z-index: 1000; border-bottom: 3px solid var(--rojo); 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+        
+        .logo-container { display: flex; align-items: center; gap: 15px; }
+        
+        /* AJUSTE LOGO */
+        .logo-img { 
+            height: 50px; 
+            width: auto; 
+            animation: float 3s ease-in-out infinite; 
+            /* Filtro y fondo pequeño blanco por si tu logo es negro/transparente */
+            filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.2)); 
+            background: #fff; 
+            padding: 2px;
+            border-radius: 4px;
+        }
+
+        .logo-text { font-weight: 900; font-size: 1.3rem; text-transform: uppercase; letter-spacing: 2px; }
+        .logo-text span { color: var(--rojo); }
+        
+        .nav-links { display: flex; gap: 30px; list-style: none; }
+        .nav-links a { font-weight: 700; font-size: 0.9rem; text-transform: uppercase; transition: 0.3s; position: relative; }
         .nav-links a:hover { color: var(--rojo); }
+
+        /* HEADER DEL CATÁLOGO */
+        .catalog-header {
+            padding: 120px 20px 60px 20px;
+            text-align: center;
+            background: linear-gradient(to bottom, #000, var(--negro));
+            animation: slideUp 0.8s ease-out;
+        }
+
+        .catalog-header h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            text-shadow: 0 0 20px rgba(230, 0, 0, 0.6);
+        }
         
-        /* SECCIONES ESPECÍFICAS DE CATÁLOGO */
-        .ofertas-section { background: var(--negro); color: var(--blanco); padding: 120px 20px 80px 20px; text-align: center; }
-        .oferta-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; margin-top: 40px; }
-        .oferta-card { background: #1a1a1a; border: 2px solid var(--rojo); padding: 30px; width: 300px; position: relative; }
-        
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: var(--amarillo);
+            margin-top: 10px;
+            letter-spacing: 1px;
+        }
+
+        /* SECCIÓN OFERTAS */
+        .ofertas-section {
+            padding: 50px 20px;
+            background: url('https://www.transparenttextures.com/patterns/carbon-fibre.png'), linear-gradient(45deg, #1a0000, #000);
+            border-bottom: 1px solid #333;
+        }
+
+        .oferta-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; margin-top: 30px; }
+
+        .oferta-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid var(--rojo);
+            padding: 30px;
+            width: 300px;
+            position: relative;
+            text-align: center;
+            transition: 0.3s;
+            overflow: hidden;
+        }
+
+        .oferta-card:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(230, 0, 0, 0.4); background: rgba(230, 0, 0, 0.1); }
+
+        .etiqueta-oferta {
+            position: absolute; top: 0; right: 0;
+            background: var(--amarillo); color: var(--negro);
+            padding: 5px 15px; font-weight: 900; font-size: 0.8rem;
+        }
+
+        .btn-oferta {
+            padding: 10px 25px; background: var(--blanco); color: var(--negro);
+            border: none; font-weight: 900; cursor: pointer; margin-top: 15px;
+            transition: 0.3s; text-transform: uppercase;
+        }
+        .btn-oferta:hover { background: var(--amarillo); }
+
+
+        /* SECCIÓN PRODUCTOS */
         .products-section { padding: 80px 50px; }
-        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; }
-        .product-card { border: 1px solid #eee; transition: 0.3s; display: block; }
-        .product-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
-        .img-container { height: 300px; background: #eee; position: relative; overflow: hidden; }
-        .product-img { width: 100%; height: 100%; object-fit: cover; }
-        .product-info { padding: 20px; }
-        .product-price { color: var(--rojo); font-weight: 800; font-size: 1.2rem; }
-        .tag { position: absolute; top: 10px; left: 10px; background: var(--amarillo); padding: 5px 10px; font-weight: bold; font-size: 0.8rem; }
+        
+        .product-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 40px; 
+            max-width: 1200px;
+            margin: 0 auto;
+        }
 
-        .reviews-section { background: var(--gris); padding: 80px 50px; text-align: center; }
-        .review-card { background: #fff; padding: 30px; margin: 20px auto; max-width: 600px; border-left: 5px solid var(--amarillo); text-align: left; }
+        .product-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: 0.4s;
+            position: relative;
+            overflow: hidden;
+            border-radius: 5px;
+        }
 
-        footer { background: var(--negro); color: var(--blanco); padding: 50px 20px; text-align: center; border-top: 5px solid var(--amarillo); }
-        .btn-float { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: var(--whats); border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 2000; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
-        .btn-float img { width: 35px; }
+        .product-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--amarillo);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
 
-        @media (max-width: 768px) { .navbar { padding: 15px 20px; } .nav-links { display: none; } }
+        .img-container {
+            height: 300px;
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .product-img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .product-card:hover .product-img { transform: scale(1.1); }
+
+        .tag {
+            position: absolute; top: 10px; left: 10px;
+            background: var(--rojo); color: var(--blanco);
+            padding: 5px 10px; font-weight: 900; font-size: 0.7rem;
+            text-transform: uppercase; z-index: 10;
+        }
+
+        .product-info { padding: 25px; text-align: left; }
+        
+        .product-cat { color: #888; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 5px; }
+        
+        .product-name { 
+            font-size: 1.3rem; font-weight: 800; margin-bottom: 10px; 
+            color: var(--blanco); 
+        }
+
+        .product-price { 
+            color: var(--amarillo); font-weight: 900; font-size: 1.4rem; 
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+        }
+
+        /* RESEÑAS */
+        .reviews-section {
+            padding: 80px 20px;
+            background: var(--gris-oscuro);
+            text-align: center;
+        }
+
+        .review-card {
+            background: rgba(255,255,255,0.05);
+            padding: 30px;
+            margin: 20px auto;
+            max-width: 600px;
+            border-left: 4px solid var(--rojo);
+            text-align: left;
+        }
+
+        /* ANIMACIONES */
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
+        @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-10px); } 60% { transform: translateY(-5px); } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
+
+        .btn-float { 
+            position: fixed; bottom: 30px; right: 30px; width: 70px; height: 70px; 
+            background: var(--whats); border-radius: 50%; display: flex; align-items: center; justify-content: center; 
+            z-index: 2000; box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5); 
+            animation: bounce 2s infinite; 
+        }
+        .btn-float img { width: 40px; }
+
+        /* FOOTER */
+        footer { background: #000; padding: 50px 20px; text-align: center; border-top: 5px solid var(--amarillo); color: #777; }
+        footer h3 { color: var(--blanco); font-size: 1.5rem; margin-bottom: 10px; }
+
+        @media (max-width: 768px) {
+            .navbar { padding: 15px 20px; } .nav-links { display: none; }
+            .catalog-header h1 { font-size: 2.5rem; }
+        }
     </style>
 </head>
 <body>
 
-    <a href="https://wa.me/qr/EKGTDP4M2BI7B1" class="btn-float" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"></a>
+    <a href="https://wa.me/qr/EKGTDP4M2BI7B1" class="btn-float" target="_blank">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+    </a>
 
     <nav class="navbar">
-        <div class="logo">JAGUARES <span>SHOP.</span></div>
+        <div class="logo-container">
+            <img src="logo.jpg" alt="Jaguar Logo" class="logo-img">
+            <div class="logo-text">JAGUARES <span>SHOP</span></div>
+        </div>
         <ul class="nav-links">
-            <li><a href="index.html">Inicio</a></li> 
+            <li><a href="index.html">Inicio</a></li>
             <li><a href="#" style="color: var(--rojo);">Catálogo</a></li>
         </ul>
+        <a href="https://wa.me/qr/EKGTDP4M2BI7B1" target="_blank" style="color: var(--amarillo); font-weight: bold; font-size: 0.9rem;">WHATSAPP ↗</a>
     </nav>
 
+    <header class="catalog-header">
+        <h1>Nuestra <span style="color: var(--rojo);">Colección</span></h1>
+        <p class="section-subtitle">Elige tu estilo. Domina el terreno.</p>
+    </header>
+
     <section class="ofertas-section">
-        <h2>ZONA DE CAZA (OFERTAS)</h2>
+        <h2 style="text-align: center; font-size: 2.5rem; color: var(--blanco);">ZONA DE CAZA 🎯</h2>
         <div class="oferta-grid">
             <div class="oferta-card">
-                <h3 style="color: var(--amarillo);">Pack Inicio</h3>
-                <p>Tenis + Playera</p>
-                <h2 style="color: var(--rojo); margin: 10px 0;">$1,999</h2>
-                <button onclick="window.open('https://wa.me/qr/EKGTDP4M2BI7B1', '_blank')" style="padding: 10px; background: #fff; border: none; font-weight: bold; cursor: pointer;">COMPRAR</button>
+                <span class="etiqueta-oferta">-20%</span>
+                <h3 style="color: var(--amarillo); margin-bottom: 10px;">Pack Inicio</h3>
+                <p style="color: #ccc;">Tenis + Playera</p>
+                <h2 style="color: var(--blanco); margin: 15px 0;">$1,999</h2>
+                <button class="btn-oferta" onclick="window.open('https://wa.me/qr/EKGTDP4M2BI7B1', '_blank')">CAZAR OFERTA</button>
             </div>
+            
             <div class="oferta-card" style="border-color: var(--amarillo);">
-                <h3>Liquidación</h3>
-                <p>Últimas tallas</p>
-                <h2 style="color: var(--rojo); margin: 10px 0;">$999</h2>
-                <button onclick="window.open('https://wa.me/qr/EKGTDP4M2BI7B1', '_blank')" style="padding: 10px; background: var(--amarillo); border: none; font-weight: bold; cursor: pointer;">VER</button>
+                <span class="etiqueta-oferta" style="background: var(--rojo); color: #fff;">LIQUIDACIÓN</span>
+                <h3 style="color: var(--blanco); margin-bottom: 10px;">Últimas Tallas</h3>
+                <p style="color: #ccc;">Modelos 2023</p>
+                <h2 style="color: var(--blanco); margin: 15px 0;">$999</h2>
+                <button class="btn-oferta" style="background: var(--amarillo);" onclick="window.open('https://wa.me/qr/EKGTDP4M2BI7B1', '_blank')">VER MODELOS</button>
             </div>
         </div>
     </section>
 
     <section class="products-section">
-        <h2 style="text-align: center; margin-bottom: 50px; font-size: 2.5rem;">TODOS LOS PRODUCTOS</h2>
         <div class="product-grid">
             
             <a href="https://wa.me/qr/EKGTDP4M2BI7B1" target="_blank" class="product-card">
@@ -85,7 +265,8 @@
                     <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" class="product-img">
                 </div>
                 <div class="product-info">
-                    <h3>Jaguar Speed Red</h3>
+                    <p class="product-cat">Running / Elite</p>
+                    <h3 class="product-name">Jaguar Speed Red</h3>
                     <p class="product-price">$1,899.00</p>
                 </div>
             </a>
@@ -95,18 +276,20 @@
                     <img src="https://images.unsplash.com/photo-1618354691373-d851c5c3a990?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" class="product-img">
                 </div>
                 <div class="product-info">
-                    <h3>Camiseta Black Edition</h3>
+                    <p class="product-cat">Apparel / Training</p>
+                    <h3 class="product-name">Camiseta Black Edition</h3>
                     <p class="product-price">$650.00</p>
                 </div>
             </a>
 
             <a href="https://wa.me/qr/EKGTDP4M2BI7B1" target="_blank" class="product-card">
                 <div class="img-container">
-                    <span class="tag" style="background: var(--rojo); color: #fff;">OFERTA</span>
+                    <span class="tag" style="background: var(--amarillo); color: #000;">HOT</span>
                     <img src="https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" class="product-img">
                 </div>
                 <div class="product-info">
-                    <h3>Urban Kicks White</h3>
+                    <p class="product-cat">Lifestyle</p>
+                    <h3 class="product-name">Urban Kicks White</h3>
                     <p class="product-price">$1,400.00</p>
                 </div>
             </a>
@@ -116,7 +299,8 @@
                     <img src="https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" class="product-img">
                 </div>
                 <div class="product-info">
-                    <h3>Jaguar Jump Green</h3>
+                    <p class="product-cat">Basket / Pro</p>
+                    <h3 class="product-name">Jaguar Jump Green</h3>
                     <p class="product-price">$2,200.00</p>
                 </div>
             </a>
@@ -125,18 +309,18 @@
     </section>
 
     <section class="reviews-section">
-        <h2>LO QUE DICEN DE NOSOTROS</h2>
+        <h2 style="font-size: 2rem; margin-bottom: 20px;">LA MANADA HABLA 💬</h2>
         
         <div class="review-card">
-            <div style="color: var(--amarillo);">★★★★★</div>
-            <p style="font-style: italic; margin: 10px 0;">"Excelente calidad, me llegaron súper rápido."</p>
-            <strong>- Carlos M.</strong>
+            <div style="color: var(--amarillo); font-size: 1.2rem;">★★★★★</div>
+            <p style="font-style: italic; margin: 15px 0; color: #ccc;">"La calidad de los tenis es brutal. El envío fue rapidísimo y la atención por WhatsApp 10/10."</p>
+            <strong style="color: var(--blanco);">- Carlos Mendoza</strong> <span style="color: var(--rojo); font-size: 0.8rem; margin-left: 10px;">VERIFICADO</span>
         </div>
 
         <div class="review-card">
-            <div style="color: var(--amarillo);">★★★★★</div>
-            <p style="font-style: italic; margin: 10px 0;">"Los tenis están increíbles, muy cómodos."</p>
-            <strong>- Ana P.</strong>
+            <div style="color: var(--amarillo); font-size: 1.2rem;">★★★★★</div>
+            <p style="font-style: italic; margin: 15px 0; color: #ccc;">"Me encantó el diseño de la ropa. Definitivamente volveré a comprar aquí."</p>
+            <strong style="color: var(--blanco);">- Ana Paola G.</strong> <span style="color: var(--rojo); font-size: 0.8rem; margin-left: 10px;">VERIFICADO</span>
         </div>
     </section>
 
